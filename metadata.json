@@ -1,0 +1,6 @@
+{
+  "name": "VSL Lead Landing Page",
+  "description": "High-converting landing page with a centered Video Sales Letter (VSL), optimized lead capture form, dynamic urgency features, and clear social proof comments.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
