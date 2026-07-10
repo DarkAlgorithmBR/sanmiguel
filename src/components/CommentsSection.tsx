@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { Star, Check, Send, Sparkles, MessageCircle, Trash2 } from 'lucide-react';
+import { Star, Check, Send, Sparkles, MessageCircle } from 'lucide-react';
 import { Comment } from '../types';
 
 interface CommentsSectionProps {
   comments: Comment[];
   onAddComment: (comment: Omit<Comment, 'id' | 'timestamp'>) => void;
-  onDeleteComment?: (id: string) => void;
 }
 
-export default function CommentsSection({ comments, onAddComment, onDeleteComment }: CommentsSectionProps) {
+export default function CommentsSection({ comments, onAddComment }: CommentsSectionProps) {
   const [newCommentAuthor, setNewCommentAuthor] = useState('');
   const [newCommentText, setNewCommentText] = useState('');
   const [newCommentRating, setNewCommentRating] = useState(5);
@@ -93,19 +92,6 @@ export default function CommentsSection({ comments, onAddComment, onDeleteCommen
                   <span className="text-[10px] text-slate-500 font-mono">
                     {comment.timestamp}
                   </span>
-                  {onDeleteComment && (
-                    <button
-                      onClick={() => {
-                        if (window.confirm('¿Está seguro de que desea eliminar este testimonio?')) {
-                          onDeleteComment(comment.id);
-                        }
-                      }}
-                      className="p-1 hover:bg-red-500/10 text-slate-500 hover:text-red-400 rounded transition-all cursor-pointer"
-                      title="Eliminar testimonio"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                  )}
                 </div>
               </div>
 

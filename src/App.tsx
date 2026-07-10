@@ -27,8 +27,21 @@ export default function App() {
     const saved = localStorage.getItem('vsl_landing_comments');
     if (saved) {
       try {
-        const parsed = JSON.parse(saved);
-        return parsed
+        let parsed = JSON.parse(saved);
+        if (!Array.isArray(parsed)) {
+          parsed = [];
+        }
+
+        // Restore any missing default comments (e.g. Juan Pedro 'c3')
+        INITIAL_COMMENTS.forEach((initial) => {
+          const exists = parsed.some((c: Comment) => c.id === initial.id || c.author === initial.author);
+          if (!exists) {
+            parsed.push(initial);
+          }
+        });
+
+        // Filter and map comments
+        const filtered = parsed
           .filter((c: Comment) => {
             const author = (c.author || '').trim();
             const username = (c.username || '').trim();
@@ -54,6 +67,20 @@ export default function App() {
             }
             return c;
           });
+
+        // Sort comments: user comments ('C-') first, followed by default comments sorted c1, c2, c3, etc.
+        filtered.sort((a: Comment, b: Comment) => {
+          const isAUser = a.id.startsWith('C-');
+          const isBUser = b.id.startsWith('C-');
+          if (isAUser && !isBUser) return -1;
+          if (!isAUser && isBUser) return 1;
+          if (!isAUser && !isBUser) {
+            return a.id.localeCompare(b.id);
+          }
+          return 0; // maintain relative user comment order
+        });
+
+        return filtered;
       } catch (e) {
         return INITIAL_COMMENTS;
       }
@@ -150,10 +177,6 @@ export default function App() {
     };
 
     setComments((prev) => [newComment, ...prev]);
-  };
-
-  const handleDeleteComment = (id: string) => {
-    setComments((prev) => prev.filter((c) => c.id !== id));
   };
 
   // 8. Custom Theme CSS classes map
@@ -277,7 +300,6 @@ export default function App() {
           <CommentsSection 
             comments={comments} 
             onAddComment={handleAddComment} 
-            onDeleteComment={handleDeleteComment}
           />
         </section>
 
