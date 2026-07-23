@@ -11,11 +11,11 @@ interface VSLPlayerProps {
 // This prevents React from destroying the player's DOM when viewerCount or config changes.
 const VTurbElement = memo(() => {
   useEffect(() => {
-    const scriptId = 'vturb-script-6a501cdb6ed339666565405b';
+    const scriptId = 'vturb-script-6a61728d166b82669f0b7674';
     if (!document.getElementById(scriptId)) {
       const s = document.createElement("script");
       s.id = scriptId;
-      s.src = "https://scripts.converteai.net/46ca464a-d021-47df-bcfd-6093e65477ca/players/6a501cdb6ed339666565405b/v4/player.js";
+      s.src = "https://scripts.converteai.net/6fdc9e4c-9608-4c07-9431-6930da6cee99/players/6a61728d166b82669f0b7674/v4/player.js";
       s.async = true;
       document.head.appendChild(s);
     }
@@ -25,7 +25,7 @@ const VTurbElement = memo(() => {
     <div 
       className="w-full relative"
       dangerouslySetInnerHTML={{
-        __html: `<vturb-smartplayer id="vid-6a501cdb6ed339666565405b" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 125% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>`
+        __html: `<vturb-smartplayer id="vid-6a61728d166b82669f0b7674" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 125% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>`
       }}
     />
   );
