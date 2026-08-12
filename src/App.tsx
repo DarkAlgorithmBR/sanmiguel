@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Sparkles, 
   Lock, 
@@ -78,7 +78,7 @@ export default function App() {
   }, []);
 
   // 4. Handle VSL start and delay timer logic
-  const handleVslPlayStarted = () => {
+  const handleVslPlayStarted = useCallback(() => {
     setVslStarted(true);
     
     if (config.formShowOption === 'always') {
@@ -95,7 +95,7 @@ export default function App() {
         }, 300);
       }, config.formDelaySeconds * 1000);
     }
-  };
+  }, [config.formShowOption, config.formDelaySeconds]);
 
   // If form show option is 'always', force show it
   useEffect(() => {
