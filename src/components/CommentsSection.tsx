@@ -40,12 +40,12 @@ export default function CommentsSection({ comments, onAddComment }: CommentsSect
       {/* Title & Stats */}
       <div className="text-center space-y-3">
         <h3 className="text-xl md:text-2xl font-bold text-white font-sans tracking-wide">
-          Comentarios
+          Commentaires
         </h3>
         
-        {/* Mostrando stats block exact to screenshot */}
+        {/* Mostrando stats block */}
         <div className="inline-block px-4 py-1.5 bg-[#fef0cd] text-slate-900 rounded-md text-xs font-bold font-sans">
-          Mostrando 18 de 322 comentarios
+          Affichage de 18 sur 322 commentaires
         </div>
       </div>
 
@@ -122,58 +122,58 @@ export default function CommentsSection({ comments, onAddComment }: CommentsSect
             className="inline-flex items-center space-x-2 py-2.5 px-5 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-xl text-xs font-bold text-amber-400 hover:text-amber-300 transition-all cursor-pointer"
           >
             <MessageCircle className="w-4 h-4" />
-            <span>¿Quieres dejar tu testimonio? Escribir comentario</span>
+            <span>Vous souhaitez laisser votre témoignage ? Écrire un commentaire</span>
           </button>
         ) : (
           <div className="p-5 bg-slate-950 border border-slate-800 rounded-2xl text-left space-y-4 animate-fade-in">
             <div className="flex justify-between items-center">
               <h4 className="text-sm font-extrabold uppercase text-amber-400 tracking-wider flex items-center space-x-1.5">
                 <Sparkles className="w-4 h-4" />
-                <span>Escribe tu Testimonio</span>
+                <span>Rédiger votre témoignage</span>
               </h4>
               <button 
                 onClick={() => setIsFormOpen(false)}
                 className="text-xs text-slate-500 hover:text-white"
               >
-                Cancelar
+                Annuler
               </button>
             </div>
 
             <form onSubmit={handleSubmitComment} className="space-y-3 text-xs">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="text-slate-400 font-medium">Tu Nombre Completo</label>
+                  <label className="text-slate-400 font-medium">Votre Nom Complet</label>
                   <input
                     type="text"
                     required
                     value={newCommentAuthor}
                     onChange={(e) => setNewCommentAuthor(e.target.value)}
-                    placeholder="Ej. Sofia Mendes"
+                    placeholder="Ex. Sophie Martin"
                     className="w-full p-2 bg-slate-900 border border-slate-800 rounded-lg text-white"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-slate-400 font-medium">Calificación (Estrellas)</label>
+                  <label className="text-slate-400 font-medium">Note (Étoiles)</label>
                   <select
                     value={newCommentRating}
                     onChange={(e) => setNewCommentRating(parseInt(e.target.value))}
                     className="w-full p-2 bg-slate-900 border border-slate-800 rounded-lg text-white"
                   >
-                    <option value={5}>⭐⭐⭐⭐⭐ (Excelente)</option>
-                    <option value={4}>⭐⭐⭐⭐ (Muy Bueno)</option>
-                    <option value={3}>⭐⭐⭐ (Bueno)</option>
+                    <option value={5}>⭐⭐⭐⭐⭐ (Excellent)</option>
+                    <option value={4}>⭐⭐⭐⭐ (Très bon)</option>
+                    <option value={3}>⭐⭐⭐ (Bon)</option>
                   </select>
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="text-slate-400 font-medium">Tu Testimonio / Experiencia</label>
+                <label className="text-slate-400 font-medium">Votre Témoignage / Expérience</label>
                 <textarea
                   required
                   rows={3}
                   value={newCommentText}
                   onChange={(e) => setNewCommentText(e.target.value)}
-                  placeholder="Comparte cómo te ha ayudado esta frecuencia o canto espiritual..."
+                  placeholder="Partagez comment cette prière sacrée vous a aidé..."
                   className="w-full p-2 bg-slate-900 border border-slate-800 rounded-lg text-white"
                 />
               </div>
@@ -183,7 +183,7 @@ export default function CommentsSection({ comments, onAddComment }: CommentsSect
                 className="w-full py-2.5 px-4 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg flex items-center justify-center space-x-1.5 transition-colors cursor-pointer"
               >
                 <Send className="w-3.5 h-3.5" />
-                <span>Enviar Comentario</span>
+                <span>Envoyer le commentaire</span>
               </button>
             </form>
           </div>
@@ -191,7 +191,7 @@ export default function CommentsSection({ comments, onAddComment }: CommentsSect
 
         {commentSuccess && (
           <div className="mt-3 p-3 bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-xs rounded-xl inline-block font-medium animate-pulse">
-            ¡Testimonio enviado con éxito! Se mostrará en la lista ahora.
+            Témoignage envoyé avec succès ! Il apparaît maintenant dans la liste.
           </div>
         )}
       </div>

@@ -10,79 +10,21 @@ import VSLPlayer from './components/VSLPlayer';
 import CommentsSection from './components/CommentsSection';
 
 export default function App() {
-  // 1. Initial Configurations and local storage state sync
-  const [config, setConfig] = useState<LandingPageConfig>(() => {
-    const saved = localStorage.getItem('vsl_landing_config');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        return INITIAL_CONFIG;
-      }
-    }
-    return INITIAL_CONFIG;
-  });
+  // 1. Initial Configurations and state
+  const [config, setConfig] = useState<LandingPageConfig>(INITIAL_CONFIG);
 
   const [comments, setComments] = useState<Comment[]>(() => {
     const saved = localStorage.getItem('vsl_landing_comments');
     if (saved) {
       try {
-        let parsed = JSON.parse(saved);
-        if (!Array.isArray(parsed)) {
-          parsed = [];
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          // Get user-created comments (starting with C-)
+          const userComments = parsed.filter((c: Comment) => c && c.id && c.id.startsWith('C-'));
+          return [...userComments, ...INITIAL_COMMENTS];
         }
-
-        // Restore any missing default comments (e.g. Juan Pedro 'c3')
-        INITIAL_COMMENTS.forEach((initial) => {
-          const exists = parsed.some((c: Comment) => c.id === initial.id || c.author === initial.author);
-          if (!exists) {
-            parsed.push(initial);
-          }
-        });
-
-        // Filter and map comments
-        const filtered = parsed
-          .filter((c: Comment) => {
-            const author = (c.author || '').trim();
-            const username = (c.username || '').trim();
-            const content = (c.content || '').trim();
-            // Filter out junk/test comments like name "21", username "213" or content "asdasdasd"
-            if (
-              author === '21' || 
-              username === '213' || 
-              username === '@213' || 
-              content === 'asdasdasd' || 
-              content.includes('asdasdasd')
-            ) {
-              return false;
-            }
-            return true;
-          })
-          .map((c: Comment) => {
-            if (c.id === 'c1') {
-              return {
-                ...c,
-                avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face'
-              };
-            }
-            return c;
-          });
-
-        // Sort comments: user comments ('C-') first, followed by default comments sorted c1, c2, c3, etc.
-        filtered.sort((a: Comment, b: Comment) => {
-          const isAUser = a.id.startsWith('C-');
-          const isBUser = b.id.startsWith('C-');
-          if (isAUser && !isBUser) return -1;
-          if (!isAUser && isBUser) return 1;
-          if (!isAUser && !isBUser) {
-            return a.id.localeCompare(b.id);
-          }
-          return 0; // maintain relative user comment order
-        });
-
-        return filtered;
       } catch (e) {
-        return INITIAL_COMMENTS;
+        // Fallback to defaults
       }
     }
     return INITIAL_COMMENTS;
@@ -95,8 +37,8 @@ export default function App() {
 
   // Save states to local storage on change
   useEffect(() => {
-    localStorage.setItem('vsl_landing_config', JSON.stringify(config));
-  }, [config]);
+    localStorage.removeItem('vsl_landing_config');
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('vsl_landing_comments', JSON.stringify(comments));
@@ -173,7 +115,7 @@ export default function App() {
       rating: commentData.rating,
       content: commentData.content,
       isVerified: commentData.isVerified,
-      timestamp: 'Hace unos segundos'
+      timestamp: 'Il y a quelques secondes'
     };
 
     setComments((prev) => [newComment, ...prev]);
@@ -263,7 +205,7 @@ export default function App() {
         <div className="mb-4 flex justify-center animate-fade-in">
           <div className="inline-flex items-center space-x-1.5 px-3.5 py-1 bg-amber-500/10 text-amber-400 text-[10px] uppercase font-black rounded-full border border-amber-500/20 tracking-widest">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Frecuencia Sagrada Activada</span>
+            <span>Fréquence Sacrée Activée</span>
           </div>
         </div>
 
@@ -276,9 +218,11 @@ export default function App() {
         </h1>
 
         {/* Subtitle / Secondary descriptor hook */}
-        <p className="mt-4 text-sm md:text-base text-slate-400 max-w-2xl mx-auto leading-relaxed">
-          {config.subheadline}
-        </p>
+        {config.subheadline && config.subheadline.trim() !== '' && (
+          <p className="mt-4 text-sm md:text-base text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            {config.subheadline}
+          </p>
+        )}
       </header>
 
       {/* 3. Central Centered VSL Area */}
@@ -312,27 +256,27 @@ export default function App() {
         <div className="max-w-3xl mx-auto space-y-3">
           <div className="flex items-center justify-center space-x-1.5 text-slate-400 text-[10px] uppercase font-bold tracking-widest">
             <Crown className="w-4 h-4 text-amber-500" />
-            <span>Frecuencia Divina Oficial © {new Date().getFullYear()}</span>
+            <span>Fréquence Divine Officielle © {new Date().getFullYear()}</span>
           </div>
 
           <p className="text-slate-500 max-w-xl mx-auto leading-relaxed text-[11px]">
-            Este sitio web no está afiliado, respaldado ni patrocinado por Facebook, Google, YouTube o Hotmart de manera oficial. Los resultados descritos son testimonios personales y pueden variar de persona a persona según la fe y la constancia de las prácticas.
+            Ce site web n'est pas affilié, approuvé ou parrainé officiellement par Facebook, Google, YouTube ou Hotmart. Les résultats décrits sont des témoignages personnels et peuvent varier d'une personne à l'autre selon la foi et la régularité de la pratique.
           </p>
         </div>
 
         {/* Terms links */}
         <div className="flex items-center justify-center space-x-4 text-[11px] font-bold text-slate-400">
-          <a href="#privacy" className="hover:text-amber-400 transition-colors">Política de Privacidad</a>
+          <a href="#privacy" className="hover:text-amber-400 transition-colors">Politique de Confidentialité</a>
           <span>•</span>
-          <a href="#terms" className="hover:text-amber-400 transition-colors">Términos de Servicio</a>
+          <a href="#terms" className="hover:text-amber-400 transition-colors">Conditions d'Utilisation</a>
           <span>•</span>
-          <a href="#contact" className="hover:text-amber-400 transition-colors">Contacto</a>
+          <a href="#contact" className="hover:text-amber-400 transition-colors">Contact</a>
         </div>
 
         {/* Simple security trust seal */}
         <div className="flex items-center justify-center space-x-1.5 text-slate-600 text-[10px]">
           <Lock className="w-3.5 h-3.5" />
-          <span>Encriptado SSL de 256 bits</span>
+          <span>Chiffrement SSL 256 bits</span>
         </div>
       </footer>
 

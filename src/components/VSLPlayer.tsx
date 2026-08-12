@@ -11,11 +11,11 @@ interface VSLPlayerProps {
 // This prevents React from destroying the player's DOM when viewerCount or config changes.
 const VTurbElement = memo(() => {
   useEffect(() => {
-    const scriptId = 'vturb-script-6a61728d166b82669f0b7674';
+    const scriptId = 'vturb-script-6a7bfa8ab5c6baff83ea57bf';
     if (!document.getElementById(scriptId)) {
       const s = document.createElement("script");
       s.id = scriptId;
-      s.src = "https://scripts.converteai.net/6fdc9e4c-9608-4c07-9431-6930da6cee99/players/6a61728d166b82669f0b7674/v4/player.js";
+      s.src = "https://scripts.converteai.net/7afa7b90-a8d5-41d5-9f8d-bd1e20c59d59/players/6a7bfa8ab5c6baff83ea57bf/v4/player.js";
       s.async = true;
       document.head.appendChild(s);
     }
@@ -25,7 +25,7 @@ const VTurbElement = memo(() => {
     <div 
       className="w-full relative"
       dangerouslySetInnerHTML={{
-        __html: `<vturb-smartplayer id="vid-6a61728d166b82669f0b7674" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 125% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>`
+        __html: `<vturb-smartplayer id="vid-6a7bfa8ab5c6baff83ea57bf" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 178.21782178217822% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>`
       }}
     />
   );
@@ -49,7 +49,7 @@ export default function VSLPlayer({ config, onPlayStarted, viewerCount }: VSLPla
       {/* Under-video viewer indicator */}
       <div className="text-center mt-4 text-slate-400 text-xs font-sans flex items-center justify-center space-x-1.5">
         <span className="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-        <span>• {viewerCount} personas están viendo este video ahora mismo</span>
+        <span>• {viewerCount} personnes regardent cette vidéo en ce moment</span>
       </div>
     </div>
   );
