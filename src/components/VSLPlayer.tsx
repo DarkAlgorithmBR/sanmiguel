@@ -11,11 +11,11 @@ interface VSLPlayerProps {
 // This prevents React from destroying the player's DOM when viewerCount or config changes.
 const VTurbElement = memo(() => {
   useEffect(() => {
-    const scriptId = 'vturb-script-6a7bfa8ab5c6baff83ea57bf';
+    const scriptId = 'vturb-sdk-script';
     if (!document.getElementById(scriptId)) {
       const s = document.createElement("script");
       s.id = scriptId;
-      s.src = "https://scripts.converteai.net/7afa7b90-a8d5-41d5-9f8d-bd1e20c59d59/players/6a7bfa8ab5c6baff83ea57bf/v4/player.js";
+      s.src = "https://scripts.converteai.net/lib/js/smartplayer-wc/v4/sdk.js";
       s.async = true;
       document.head.appendChild(s);
     }
@@ -25,7 +25,11 @@ const VTurbElement = memo(() => {
     <div 
       className="w-full relative"
       dangerouslySetInnerHTML={{
-        __html: `<vturb-smartplayer id="vid-6a7bfa8ab5c6baff83ea57bf" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"><div class="vturb-player-placeholder" style="position: relative; width: 100%; padding: 178.21782178217822% 0 0; z-index: 0; background-color: black;"></div></vturb-smartplayer>`
+        __html: `<div id="ifr_6a7bfa8ab5c6baff83ea57bf_wrapper" style="margin: 0 auto; width: 100%; max-width: 400px;">
+  <div style="position: relative; padding: 178.21782178217822% 0 0 0;" id="ifr_6a7bfa8ab5c6baff83ea57bf_aspect">
+    <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a7bfa8ab5c6baff83ea57bf" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" referrerpolicy="origin" onload="this.onload=null, this.src='https://scripts.converteai.net/7afa7b90-a8d5-41d5-9f8d-bd1e20c59d59/players/6a7bfa8ab5c6baff83ea57bf/v4/embed.html' +(location.search||'?') +'&vl=' +encodeURIComponent(location.href)"></iframe>
+  </div>
+</div>`
       }}
     />
   );
